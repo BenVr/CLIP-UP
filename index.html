@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <!-- "description": Describes the webpage, useful for search engines -->
+  <meta name="description" content="CLIP-UP (CLIP-based Unanswerable Problem detection) is a lightweight method for equipping VLMs with the ability to withhold answers to unanswerable questions."> 
+  <!-- "keywords": Contains keywords for search engine optimization -->
+  <meta name="keywords" content="CLIP-UP, Unanswerable visual question answering">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>CLIP-UP: CLIP-Based Unanswerable Problem Detection for Visual Question Answering</title>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+</head>
+<body>
+
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            CLIP-UP: CLIP-Based Unanswerable Problem Detection for Visual Question Answering</h1>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/ben-vardi-760432108/">Ben Vardi</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://www.linkedin.com/in/oronnir/">Oron Nir</a><sup>1,2</sup>,</span>
+            <span class="author-block">
+              <a href="https://faculty.runi.ac.il/arik/site/index.asp">Ariel Shamir</a><sup>1</sup>
+            </span>
+          </div>
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><sup>1</sup>Reichman University,</span>
+            <span class="author-block"><sup>2</sup>Microsoft Corporation</span>
+          </div>
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- arXiv Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code (coming soon)</span>
+                  </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="container is-max-desktop">
+    <!-- Abstract -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column", style="margin-top: 30px; margin-bottom: 30px;">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+          Recent Vision-Language Models (VLMs) have demonstrated remarkable capabilities in visual understanding and reasoning, and in particular on multiple-choice Visual Question Answering (VQA). Still, these models can make distinctly unnatural errors, for example, providing (wrong) answers to unanswerable VQA questions, such as questions asking about objects that do not appear in the image.
+          </p>
+          
+          <p>
+          To address this issue, we propose CLIP-UP: CLIP-based Unanswerable Problem detection, a novel lightweight method for equipping VLMs with the ability to withhold answers to unanswerable questions. By leveraging CLIP to extract question-image alignment information, CLIP-UP requires only efficient training of a few additional layers, while keeping the original VLMs' weights unchanged.
+          </p>
+          
+          <p>
+          Tested across LLaVA models, CLIP-UP achieves state-of-the-art results on the MM-UPD benchmark for assessing unanswerability in multiple-choice VQA, while preserving the original performance on other tasks.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract -->
+  </div>
+</section>
+
+<section class="hero is-small">
+  <div class="container is-max-desktop">
+    <!-- What does CLIP-UP do? -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column", style="margin-top: 30px; margin-bottom: 30px;">
+        <h2 class="title is-3">What does CLIP-UP do?</h2>
+        <div class="content has-text-justified">
+          <p>
+            CLIP-UP equips pre-trained VLMs with the ability to detect and withhold answers to unanswerable questions, while still preserving the original capabilities on standard answerable questions.
+          </p>
+
+          <p>
+            Three categories of unanswerability are considered: (1) Absent Answer Detection (AAD) – questions where all answer options are incorrect; (2) Incompatible Answer Set Detection (IASD) – questions with answer options incompatible with the question; and (3) Incompatible Visual Question Detection (IVQD) – questions where the question is incompatible with the image.
+          </p>
+
+          <p>
+            In the example below, LLaVA-1.5-7B correctly answers a standard answerable question but fails to withold answers for the three unanswerable questions cases (AAD, IASD and IVQD). CLIP-UP enhances LLaVA-1.5-7B by equipping it with the ability to withhold answers to unanswerable questions, while preserving its ability to respond to standard ones. 
+          </p>
+        </div>
+        <img src="./static/images/clip_up_results_demo.jpg"
+        alt="CLIP-UP demo"/>
+      </div>
+    </div>
+    <!-- / What does CLIP-UP do? -->
+  </div>
+</section>
+
+
+<section class="hero is-light is-small">
+  <div class="container is-max-desktop">
+    <!-- How does CLIP-UP work? -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column", style="margin-top: 30px; margin-bottom: 30px;">
+        <h2 class="title is-3">How does CLIP-UP work?</h2>
+        <div class="content has-text-justified">
+          <p>
+            The figure below illustrates CLIP-UP applied on LLaVA architecture:
+          </p>
+          
+          <p>
+            (a) Given an image and multiple-choice VQA prompt, the prompt is transformed into text segments merging the question with each answer option. These segments and the image are encoded by CLIP (specifically Structure-CLIP) to produce embeddings, from which <i>correlation vectors</i> are formed via element-wise multiplication. 
+            A learnable projection module maps the correlation vectors into LLaVA's intermediate feature space. The resulting new embedding vector is integrated into the LLM alongside the standard inputs. The process does not alter LLaVA's original weights.
+          </p>
+          
+          <p>
+            (b) To address all unanswerability categories, a Mixture of Experts (MoE) approach is used. We learn a gating module that combines embedding vectors generated from pre-trained &quot;expert projections&quot; for each of the three unanswerability categories.
+          </p>
+        </div>
+        <img src="./static/images/clip_up_arch.png"
+        alt="CLIP-UP architecture"/>
+      </div>
+    </div>
+    <!-- / How does CLIP-UP work? -->
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>TODO</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is based on the <a
+            href="https://nerfies.github.io/">Nerfies</a> project page and is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
