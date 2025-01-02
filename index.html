@@ -115,11 +115,11 @@
           </p>
 
           <p>
-            Three categories of unanswerability are considered: (1) Absent Answer Detection (AAD) – questions where all answer options are incorrect; (2) Incompatible Answer Set Detection (IASD) – questions with answer options incompatible with the question; and (3) Incompatible Visual Question Detection (IVQD) – questions where the question is incompatible with the image.
+            Three categories of multiple-choice VQA unanswerability are considered: (1) Absent Answer Detection (AAD) – questions where all answer options are incorrect; (2) Incompatible Answer Set Detection (IASD) – questions with answer options incompatible with the question; and (3) Incompatible Visual Question Detection (IVQD) – questions where the question is incompatible with the image.
           </p>
 
           <p>
-            In the example below, LLaVA-1.5-7B correctly answers a standard answerable question but fails to withold answers for the three unanswerable questions cases (AAD, IASD and IVQD). CLIP-UP enhances LLaVA-1.5-7B by equipping it with the ability to withhold answers to unanswerable questions, while preserving its ability to respond to standard ones. 
+            In the example below, LLaVA-1.5-7B correctly answers a standard answerable question but fails to withold answers for the three unanswerable questions cases. CLIP-UP enhances LLaVA-1.5-7B by equipping it with the ability to withhold answers to unanswerable questions, while preserving its ability to respond to standard ones. 
           </p>
         </div>
         <img src="./static/images/clip_up_results_demo.jpg"
@@ -138,21 +138,26 @@
       <div class="column is-four-fifths", style="margin-top: 10px; margin-bottom: 10px;">
         <h2 class="title is-3">How does CLIP-UP work?</h2>
         <div class="content has-text-justified">
+        <h3 class="title is-4 has-text-justified">Idea</h3>
           <p>
-            The figure below illustrates CLIP-UP applied on LLaVA architecture:
+            CLIP-UP operates by leveraging CLIP to generate <i>correlation vectors</i> that capture alignment information between the input image and the multiple-choice question, as multiple-choice VQA (un)answerability relies on this alignment.
+            These vectors are projected into the VLM’s intermediate feature space, producing a new embedding vector is seamlessly integrated
+            into the VLM and enables it to withhold answers to unanswerable questions.
           </p>
-          
+        <h3 class="title is-4 has-text-justified">Architecture</h3>
           <p>
-            (a) Given an image and multiple-choice VQA prompt, the prompt is transformed into text segments merging the question with each answer option. These segments and the image are encoded by CLIP (specifically Structure-CLIP) to produce embeddings, from which <i>correlation vectors</i> are formed via element-wise multiplication. 
+            The figure below illustrates CLIP-UP applied on LLaVA architecture: Given an image and multiple-choice VQA prompt, the prompt is transformed into text segments merging the question with each answer option. These segments and the image are encoded by CLIP (specifically by Structure-CLIP) to produce embeddings, from which correlation vectors are formed via element-wise multiplication. 
             A learnable projection module maps the correlation vectors into LLaVA's intermediate feature space. The resulting new embedding vector is integrated into the LLM alongside the standard inputs. The process does not alter LLaVA's original weights.
           </p>
-          
+          <img src="./static/images/clip_up_architecture.jpg"
+          alt="CLIP-UP architecture"/>
+        <h3 class="title is-4 has-text-justified">CLIP-UP with Mixture of Experts</h3>
           <p>
-            (b) To address all unanswerability categories, a Mixture of Experts (MoE) approach is used. We learn a gating module that combines embedding vectors generated from pre-trained &quot;expert projections&quot; for each of the three unanswerability categories.
+            To address all unanswerability categories, a Mixture of Experts (MoE) approach is used. We learn a gating module that combines embedding vectors generated from pre-trained &quot;expert projections&quot; for each of the three unanswerability categories.
           </p>
         </div>
-        <img src="./static/images/clip_up_arch.png"
-        alt="CLIP-UP architecture"/>
+        <img src="./static/images/moe_clip_up_architecture.jpg"
+        alt="CLIP-UP MoE architecture"/>
       </div>
     </div>
     <!-- / How does CLIP-UP work? -->
