@@ -34,7 +34,7 @@
         <div class="column has-text-centered">
           <h1 class="title is-1 publication-title">
             CLIP-UP: CLIP-Based Unanswerable Problem Detection for Visual Question Answering</h1>
-          <div class="is-size-5 publication-authors">
+            <div class="is-size-5 publication-authors">
             <span class="author-block">
               <a href="https://www.linkedin.com/in/ben-vardi-760432108/">Ben Vardi</a><sup>1</sup>,</span>
             <span class="author-block">
@@ -46,6 +46,9 @@
           <div class="is-size-5 publication-authors">
             <span class="author-block"><sup>1</sup>Reichman University,</span>
             <span class="author-block"><sup>2</sup>Microsoft Corporation</span>
+          </div>
+          <div class="logos-container">
+            <img src="static/images/wacv_2026_logo.png" alt="WACV 2026 logo" width="280">
           </div>
           <div class="column has-text-centered">
             <div class="publication-links">
@@ -95,7 +98,7 @@
           </p>
 
           <p>
-          Tested across several models, CLIP-UP achieves significant improvements on benchmarks assessing unanswerability in both multiple-choice and open-ended VQA, surpassing other methods, while preserving original performance on other tasks. 
+          Tested across several models, CLIP-UP achieves significant improvements on benchmarks assessing unanswerability in both multiple-choice and open-ended VQA, surpassing other methods, while preserving original performance on other tasks.
           </p>
         </div>
       </div>
@@ -106,29 +109,36 @@
 
 <section class="section">
   <div class="container is-max-desktop">
-    <!-- What does CLIP-UP do? -->
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths", style="margin-top: 10px; margin-bottom: 10px;">
-        <h2 class="title is-3">What does CLIP-UP do?</h2>
-        <div class="content has-text-justified">
+    <div class="column">
+      <!-- What does CLIP-UP do? -->
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths", style="margin-top: 10px; margin-bottom: 10px;">
+          <h2 class="title is-3">What does CLIP-UP do?</h2>
+          <div class="content has-text-justified">
           <p>
-            CLIP-UP equips pre-trained VLMs with the ability to detect and withhold answers to unanswerable questions, while still preserving the original capabilities on standard answerable questions.
+          CLIP-UP enhances pre-trained VLMs with the ability to detect and withhold answers to multiple-choice and open-ended unanswerable questions, while preserving models' original capabilities on standard answerable questions.
           </p>
 
           <p>
-            Three categories of multiple-choice VQA unanswerability are considered: (1) Absent Answer Detection (AAD) – questions where all answer options are incorrect; (2) Incompatible Answer Set Detection (IASD) – questions with answer options incompatible with the question; and (3) Incompatible Visual Question Detection (IVQD) – questions where the question is incompatible with the image.
+          In the example below, LLaVA-1.5-7B correctly answers a standard multiple-choice answerable question but fails to withhold answers for three types of multiple-choice unanswerable questions. Similarly, for open-ended questions, LLaVA-1.5-7B correctly answers an answerable question, but fails to abstain from answering an unanswerable one.
           </p>
 
           <p>
-            In the example below, LLaVA-1.5-7B correctly answers a standard answerable question but fails to withold answers for the three unanswerable questions cases. CLIP-UP enhances LLaVA-1.5-7B by equipping it with the ability to withhold answers to unanswerable questions, while preserving its ability to respond to standard ones. 
+          CLIP-UP enhances LLaVA-1.5-7B by making it withhold answers to unanswerable questions, while still correctly answering standard ones. 
           </p>
+          </div>
         </div>
-        <img src="./static/images/clip_up_results_demo.jpg"
-        alt="CLIP-UP demo"/>
       </div>
     </div>
-    <!-- / What does CLIP-UP do? -->
   </div>
+
+  <div class="columns is-centered has-text-centered">
+    <div class="column is-5", style="margin-top: 10px; margin-bottom: 10px;">
+      <img src="./static/images/clip_up_results_demo.jpg"
+      alt="CLIP-UP demo"/>
+    </div>
+  </div>
+  <!-- / What does CLIP-UP do? -->
 </section>
 
 
@@ -140,40 +150,51 @@
         <h2 class="title is-3">How does CLIP-UP work?</h2>
         <div class="content has-text-justified">
         <h3 class="title is-4 has-text-justified">Idea</h3>
-          <p>
-            CLIP-UP operates by leveraging CLIP to generate <i>correlation vectors</i> that capture alignment information between the input image and the multiple-choice question, as multiple-choice VQA (un)answerability relies on this alignment.
-            These vectors are projected into the VLM’s intermediate feature space, producing a new embedding vector is seamlessly integrated
-            into the VLM and enables it to withhold answers to unanswerable questions.
-          </p>
+        <p>
+        The core idea of CLIP-UP is to enhance VLMs' abstention ability by injecting an answerability prior into the VLM's decision process. CLIP-UP does so by leveraging <i>correlation vectors</i> derived from CLIP embeddings of the input image and question, encoding image-question alignment information. These vectors are projected into the VLM's intermediate feature space, producing a new embedding vector that serves as an answerability prior and is seamlessly integrated into the model. 
+        </p>
+
         <h3 class="title is-4 has-text-justified">Architecture</h3>
           <p>
-            The figure below illustrates CLIP-UP applied on LLaVA architecture: Given an image and multiple-choice VQA prompt, the prompt is transformed into text segments merging the question with each answer option. These segments and the image are encoded by CLIP (specifically by Structure-CLIP) to produce embeddings, from which correlation vectors are formed via element-wise multiplication. 
-            A learnable projection module maps the correlation vectors into LLaVA's intermediate feature space. The resulting new embedding vector is integrated into the LLM alongside the standard inputs. The process does not alter LLaVA's original weights.
+            The figure below illustrates CLIP-UP applied to multiple-choice questions: given an image and a VQA prompt, the prompt is transformed into text segments merging the question with each answer option. These segments and the image are encoded by CLIP (specifically by Structure-CLIP) to produce embeddings, from which correlation vectors are formed via element-wise multiplication.
+            A learnable projection module maps these vectors into the VLM's intermediate feature space. The resulting new embedding
+            vector is integrated into the LLM component of the VLM alongside the standard inputs. The process does not alter the VLM's original weights.
           </p>
-          <img src="./static/images/clip_up_architecture.jpg"
-          alt="CLIP-UP architecture"/>
-        <h3 class="title is-4 has-text-justified">CLIP-UP with Mixture of Experts</h3>
+          <img src="./static/images/clip_up_multiple_choice_architecture.jpg"
+          alt="CLIP-UP multiple-choice architecture"/>
+          
+          <h3 class="title is-4 has-text-justified"></h3>
           <p>
-            To address all unanswerability categories, a Mixture of Experts (MoE) approach is used. We learn a gating module that combines embedding vectors generated from pre-trained &quot;expert projections&quot; for each of the three unanswerability categories.
+          The figure below shows the process for open-ended questions: the flow is similar but involves a single correlation vector computed from the image and question.
           </p>
+          <img src="./static/images/clip_up_open_ended_architecture.jpg"
+          alt="CLIP-UP open-ended architecture"/>
+
+        <h3 class="title is-4 has-text-justified">Injecting correlation vectors into LoRA</h3>
+        <p>
+        We propose an additional injection approach, beyond generating an embedding vector fed into the VLM.
+        In particular, we propose <i>Injected LoRA</i>, a novel approach for injecting priors into LoRA layers, where the prior in our case is the correlation vectors. We show that this way of using CLIP-UP correlation vectors improves results over standard LoRA. Please see the paper for more details.
+        </p>
         </div>
-        <img src="./static/images/moe_clip_up_architecture.jpg"
-        alt="CLIP-UP MoE architecture"/>
       </div>
     </div>
     <!-- / How does CLIP-UP work? -->
   </div>
 </section>
-
-
-<section class="section">
+<section class="tight-section">
   <div class="container is-max-desktop content">
     <h2 class="title">Acknowledgements</h2>
     We thank Miyai et al. for their work on <a href="https://arxiv.org/abs/2403.20331/">Unsolvable Problem Detection</a> and the MM-UPD benchmark, which supported the development and evaluation of CLIP-UP.
   </div>
 </section>
-
-<section class="section" id="BibTeX">
+<section class="tight-section">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Contact</h2> 
+    For correspondence, please contact: 
+    <a href="mailto:ben.vardi01@post.runi.ac.il">ben.vardi01@post.runi.ac.il</a>.
+  </div>
+</section>
+<section class="tight-section" id="BibTeX">
   <div class="container is-max-desktop content">
     <h2 class="title">BibTeX</h2>
     If you find our work useful, please cite:
