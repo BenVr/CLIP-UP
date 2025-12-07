@@ -155,3 +155,7 @@ body {
 #interpolation-image-wrapper img {
   border-radius: 5px;
 }
+
+.tight-section {
+  padding: 1.5rem 0;
+}
