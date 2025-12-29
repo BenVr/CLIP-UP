@@ -1,0 +1,34 @@
+name: clip_up
+channels:
+  - pytorch
+  - nvidia
+  - conda-forge
+  - defaults
+dependencies:
+  - python=3.9.21
+  - pytorch=2.5.1
+  - pytorch-cuda=12.1
+  - numpy=1.26.4
+  - pandas=2.2.3
+  - seaborn=0.13.2
+  - scikit-learn=1.6.1
+  - pip=24.2
+  - pip:
+      - transformers==4.49.0
+      - datasets==3.2.0
+      - accelerate==0.34.2
+      - peft==0.10.0
+      - bitsandbytes==0.43.2
+      - huggingface-hub==0.27.1
+      - pillow==11.1.0
+      - torchvision==0.20.1
+      - openai==1.64.0
+      - openai-clip==1.0.1
+      - ratelimit==2.2.1
+      - omegaconf==2.3.0
+      - tensorboard==2.18.0
+      - sentencepiece==0.1.99
+      - protobuf==3.20.1
+      - timm==0.9.12
+      - einops==0.6.1
+      - flash-attn==2.7.3

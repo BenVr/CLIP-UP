@@ -1,0 +1,25 @@
+num_train_epochs: 3
+gradient_accumulation_steps: 1
+
+clip_up_emb_scheduler:
+  type: 'cosine'
+  start_lr: 0.0625
+  warm_up_ratio: 0
+
+injected_lora_scheduler:
+  type: 'cosine'
+  warm_up_ratio: 0.03
+
+num_warmup_epochs: 1
+effective_warmup_batch_size: 128
+multiple_choice_warmup_lr: 0.0005
+
+should_run_validation_before_training: False
+validation_freq: 1
+checkpoint_save_freq: 1
+
+structure_clip_dim: 768
+structure_clip_checkpoint_path: './checkpoints/structure-clip.pt'
+
+data_root: './data'
+open_ai_api_key: 'nan'

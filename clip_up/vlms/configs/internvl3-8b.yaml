@@ -1,0 +1,9 @@
+effective_batch_size: 4
+injected_lora_multiple_choice_rank: 8
+injected_lora_multiple_choice_alpha: 16
+injected_lora_open_ended_rank: 16
+injected_lora_open_ended_alpha: 32
+language_model_dim: 3584
+injected_lora_scheduler:
+  start_lr: 4e-5
+gradient_clipping_max_norm: False
