@@ -1,6 +1,7 @@
 # CLIP-UP: CLIP-Based Unanswerable Problem Detection for Visual Question Answering (WACV 2026 Oral Presentation)
 
 [![arXiv](https://img.shields.io/badge/arXiv-2501.01371-b31b1b)](https://arxiv.org/abs/2501.01371)
+[![Paper](https://img.shields.io/badge/Paper-WACV%202026-blue)](https://openaccess.thecvf.com/content/WACV2026/html/Vardi_CLIP-UP_CLIP-Based_Unanswerable_Problem_Detection_for_Visual_Question_Answering_WACV_2026_paper.html)
 [![Project](https://img.shields.io/badge/Project-Website-red)](https://benvr.github.io/CLIP-UP)
 
 # Abstract
