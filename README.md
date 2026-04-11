@@ -157,13 +157,12 @@ Our code builds on many existing repositories. We specifically acknowledge the f
 # Citation
 If you use our work, please cite:
 ```
-@misc{vardi2025clipupclipbasedunanswerableproblem,
-      title={CLIP-UP: CLIP-Based Unanswerable Problem Detection for Visual Question Answering}, 
-      author={Ben Vardi and Oron Nir and Ariel Shamir},
-      year={2025},
-      eprint={2501.01371},
-      archivePrefix={arXiv},
-      primaryClass={cs.CV},
-      url={https://arxiv.org/abs/2501.01371}, 
+@inproceedings{vardi2026clipup,
+    author    = {Vardi, Ben and Nir, Oron and Shamir, Ariel},
+    title     = {{CLIP-UP}: {CLIP}-Based Unanswerable Problem Detection for Visual Question Answering},
+    booktitle = {Proceedings of the IEEE/CVF Winter Conference on Applications of Computer Vision (WACV)},
+    month     = {March},
+    year      = {2026},
+    pages     = {5898-5908}
 }
 ```
